@@ -1,31 +1,15 @@
-using FirebaseAdmin;
 using FirebaseAdmin.Database;
-using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
 public class DHTController : ControllerBase
 {
-    private static FirebaseApp _firebaseApp;
-    private static FirebaseDatabase _database;
+    private readonly FirebaseDatabase _database;
 
-    public DHTController()
+    public DHTController(FirebaseDatabase database)
     {
-        if (_firebaseApp == null)
-        {
-            string jsonConfig = Environment.GetEnvironmentVariable("FIREBASE_CONFIG");
-
-            if (!string.IsNullOrEmpty(jsonConfig))
-            {
-                _firebaseApp = FirebaseApp.Create(new AppOptions()
-                {
-                    Credential = GoogleCredential.FromJson(jsonConfig)
-                });
-
-                _database = FirebaseDatabase.GetInstance(_firebaseApp, "https://airsensorai-default-rtdb.firebaseio.com");
-            }
-        }
+        _database = database;
     }
 
     [HttpPost]
