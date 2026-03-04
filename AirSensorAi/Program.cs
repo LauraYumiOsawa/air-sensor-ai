@@ -1,6 +1,5 @@
-using FirebaseAdmin;
-using FirebaseAdmin.Database;
-using Google.Apis.Auth.OAuth2;
+using FireSharp.Config;
+using FireSharp.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,33 +18,23 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddSwaggerGen();
 
-// Register Firebase services
-builder.Services.AddSingleton<FirebaseApp>(provider =>
+
+// Register Firebase configuration
+builder.Services.AddSingleton<IFirebaseConfig>(provider =>
 {
-    string jsonConfig = Environment.GetEnvironmentVariable("FIREBASE_CONFIG");
-    
-    if (string.IsNullOrEmpty(jsonConfig))
+    var config = new FirebaseConfig
     {
-        throw new InvalidOperationException("FIREBASE_CONFIG environment variable is not set");
-    }
-    
-    if (FirebaseApp.DefaultInstance == null)
-    {
-        return FirebaseApp.Create(new AppOptions()
-        {
-            Credential = GoogleCredential.FromJson(jsonConfig)
-        });
-    }
-    
-    return FirebaseApp.DefaultInstance;
+        BasePath = Environment.GetEnvironmentVariable("FIREBASE_BASE_PATH") 
+                   ?? throw new InvalidOperationException("FIREBASE_BASE_PATH environment variable is not set")
+    };
+    return config;
 });
 
-builder.Services.AddSingleton<FirebaseDatabase>(provider =>
+builder.Services.AddScoped<IFirebaseClient>(provider =>
 {
-    var firebaseApp = provider.GetRequiredService<FirebaseApp>();
-    return FirebaseDatabase.GetInstance(firebaseApp, "https://airsensorai-default-rtdb.firebaseio.com");
+    var config = provider.GetRequiredService<IFirebaseConfig>();
+    return new FireSharp.FirebaseClient(config);
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

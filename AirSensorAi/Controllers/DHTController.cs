@@ -1,30 +1,30 @@
-using FirebaseAdmin.Database;
+using FireSharp.Interfaces;
+using FireSharp.Response;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
 public class DHTController : ControllerBase
 {
-    private readonly FirebaseDatabase _database;
+    private readonly IFirebaseClient _client;
 
-    public DHTController(FirebaseDatabase database)
+    public DHTController(IFirebaseClient client)
     {
-        _database = database;
+        _client = client;
     }
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] DeviceDto deviceData)
     {
-        var dbRef = _database.GetReference("Leituras");
-        var newPostRef = dbRef.Push(); // Cria um ID único
-        await newPostRef.SetAsync(deviceData);
+        PushResponse response = await _client.PushAsync("Leituras/", deviceData);
         return Ok(deviceData);
     }
 
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        var snapshot = await _database.GetReference("Leituras").GetValueAsync();
-        return Ok(snapshot.Value);
+        FirebaseResponse response = await _client.GetAsync("Leituras/");
+        var data = response.ResultAs<Dictionary<string, DeviceDto>>();
+        return Ok(data?.Values.ToList() ?? new List<DeviceDto>());
     }
 }
