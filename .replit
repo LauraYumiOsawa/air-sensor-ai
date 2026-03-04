@@ -1,4 +1,12 @@
+modules = ["csharp-8.0"]
+
 [deployment]
-build = ["sh", "-c", "dotnet build AirSensorAi -c Release"]
-run = ["sh", "-c", "dotnet run --project AirSensorAi --configuration Release --urls http://0.0.0.0:5000"]
+build = "dotnet build AirSensorAi -c Release"
+run = "dotnet run --project AirSensorAi --configuration Release --urls http://0.0.0.0:$PORT"
 deploymentTarget = "cloudrun"
+
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-23_11"
