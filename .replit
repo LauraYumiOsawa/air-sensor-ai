@@ -1,0 +1,4 @@
+[deployment]
+build = ["sh", "-c", "dotnet build AirSensorAi -c Release"]
+run = ["sh", "-c", "dotnet run --project AirSensorAi --configuration Release --urls http://0.0.0.0:5000"]
+deploymentTarget = "cloudrun"
