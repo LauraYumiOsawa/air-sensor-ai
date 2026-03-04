@@ -1,5 +1,7 @@
-using FireSharp.Config;
-using FireSharp.Interfaces;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Google.Cloud.Firestore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,28 +15,38 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
         policy => policy.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader());
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 });
 builder.Services.AddSwaggerGen();
 
 
-// Register Firebase configuration
-builder.Services.AddSingleton<IFirebaseConfig>(provider =>
+var path = Path.Combine(Directory.GetCurrentDirectory(), "firebase-credentials.json");
+
+var credential = GoogleCredential.FromFile(path);
+
+if (FirebaseApp.DefaultInstance == null)
 {
-    var config = new FirebaseConfig
+    FirebaseApp.Create(new AppOptions()
     {
-        BasePath = Environment.GetEnvironmentVariable("FIREBASE_BASE_PATH") 
-                   ?? throw new InvalidOperationException("FIREBASE_BASE_PATH environment variable is not set")
-    };
-    return config;
+        Credential = credential,
+        ProjectId = "airsensorai"
+    });
+}
+
+
+// Registrar Firestore
+builder.Services.AddSingleton(provider =>
+{
+    var credential = GoogleCredential.FromFile("firebase-credentials.json");
+
+    return new FirestoreDbBuilder
+    {
+        ProjectId = "airsensorai",
+        Credential = credential
+    }.Build();
 });
 
-builder.Services.AddScoped<IFirebaseClient>(provider =>
-{
-    var config = provider.GetRequiredService<IFirebaseConfig>();
-    return new FireSharp.FirebaseClient(config);
-});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,7 +56,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
 app.MapGet("/teste", () => "ok");
 app.UseCors("AllowAll");
 app.UseRouting();

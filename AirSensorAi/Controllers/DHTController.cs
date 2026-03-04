@@ -1,30 +1,29 @@
-using FireSharp.Interfaces;
-using FireSharp.Response;
+using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
 public class DHTController : ControllerBase
 {
-    private readonly IFirebaseClient _client;
+    private readonly FirestoreDb _firestoreDb;
 
-    public DHTController(IFirebaseClient client)
+    public DHTController(FirestoreDb firestoreDb)
     {
-        _client = client;
+        _firestoreDb = firestoreDb;
     }
 
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] DeviceDto deviceData)
     {
-        PushResponse response = await _client.PushAsync("Leituras/", deviceData);
-        return Ok(deviceData);
+        var docRef = await _firestoreDb.Collection("Leituras").AddAsync(deviceData);
+        return Ok(new { id = docRef.Id, data = deviceData });
     }
 
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        FirebaseResponse response = await _client.GetAsync("Leituras/");
-        var data = response.ResultAs<Dictionary<string, DeviceDto>>();
-        return Ok(data?.Values.ToList() ?? new List<DeviceDto>());
+        var snapshot = await _firestoreDb.Collection("Leituras").GetSnapshotAsync();
+        var data = snapshot.Documents.Select(doc => doc.ConvertTo<DeviceDto>()).ToList();
+        return Ok(data);
     }
 }
