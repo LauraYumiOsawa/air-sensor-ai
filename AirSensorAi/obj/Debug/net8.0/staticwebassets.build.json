@@ -1,11 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "KoGegbSX6IPCrx0jgQ2Cq/q+XzEy/0weZfOa1dmn5CA=",
-  "Source": "AirSensorAi",
-  "BasePath": "_content/AirSensorAi",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
-}
+{"Version":1,"Hash":"3pC6ddMf2wAH1BUxMlELddJkmmNbnLy3YbGp9J+1UKY=","Source":"AirSensorAi","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}

@@ -899,6 +899,7 @@
   },
   "packageFolders": {
     "/home/codespace/.nuget/packages/": {}
+    "/home/codespace/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",

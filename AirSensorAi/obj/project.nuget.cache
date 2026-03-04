@@ -3,6 +3,7 @@
   "dgSpecHash": "ODbNcgQbgi4=",
   "success": true,
   "projectFilePath": "/workspaces/air-sensor-ai/AirSensorAi/AirSensorAi.csproj",
+  "projectFilePath": "/workspaces/air-sensor-ai/AirSensorAi/AirSensorAi.csproj",
   "expectedPackageFiles": [
     "/home/codespace/.nuget/packages/firebaseadmin/3.4.0/firebaseadmin.3.4.0.nupkg.sha512",
     "/home/codespace/.nuget/packages/google.api.gax/4.8.0/google.api.gax.4.8.0.nupkg.sha512",
