@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\AirSensorAi.csproj": {}
+    "/workspaces/air-sensor-ai/AirSensorAi/AirSensorAi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\AirSensorAi.csproj": {
+    "/workspaces/air-sensor-ai/AirSensorAi/AirSensorAi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\AirSensorAi.csproj",
+        "projectUniqueName": "/workspaces/air-sensor-ai/AirSensorAi/AirSensorAi.csproj",
         "projectName": "AirSensorAi",
-        "projectPath": "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\AirSensorAi.csproj",
-        "packagesPath": "C:\\Users\\letic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\obj\\",
+        "projectPath": "/workspaces/air-sensor-ai/AirSensorAi/AirSensorAi.csproj",
+        "packagesPath": "/home/codespace/.nuget/packages/",
+        "outputPath": "/workspaces/air-sensor-ai/AirSensorAi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\letic\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/codespace/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,12 +37,17 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "FireSharp": {
+              "target": "Package",
+              "version": "[2.0.4, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.24, )"
@@ -64,6 +68,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.22, 8.0.22]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[8.0.22, 8.0.22]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.22, 8.0.22]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -72,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.418/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
