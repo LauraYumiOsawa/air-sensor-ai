@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\AirSensorAi.csproj": {}
+    "/home/caioocon/Downloads/air-sensor-ai/AirSensorAi/AirSensorAi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\AirSensorAi.csproj": {
+    "/home/caioocon/Downloads/air-sensor-ai/AirSensorAi/AirSensorAi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\AirSensorAi.csproj",
+        "projectUniqueName": "/home/caioocon/Downloads/air-sensor-ai/AirSensorAi/AirSensorAi.csproj",
         "projectName": "AirSensorAi",
-        "projectPath": "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\AirSensorAi.csproj",
-        "packagesPath": "C:\\Users\\letic\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\letic\\Desktop\\Unimar\\air-sensor-ai\\AirSensorAi\\obj\\",
+        "projectPath": "/home/caioocon/Downloads/air-sensor-ai/AirSensorAi/AirSensorAi.csproj",
+        "packagesPath": "/home/caioocon/.nuget/packages/",
+        "outputPath": "/home/caioocon/Downloads/air-sensor-ai/AirSensorAi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\letic\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/caioocon/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -38,15 +37,28 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "FirebaseAdmin": {
+              "target": "Package",
+              "version": "[3.4.0, )"
+            },
+            "Google.Apis.Auth": {
+              "target": "Package",
+              "version": "[1.73.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.24, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.4, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -64,6 +76,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.12, 8.0.12]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[8.0.12, 8.0.12]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.12, 8.0.12]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -72,7 +98,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.418/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/caioocon/.dotnet/sdk/9.0.102/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
