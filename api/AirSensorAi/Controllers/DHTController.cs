@@ -14,7 +14,7 @@ public class DHTController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] DeviceDto deviceData)
+    public async Task<IActionResult> Post([FromBody] DeviceDTO deviceData)
     {
         PushResponse response = await _client.PushAsync("Leituras/", deviceData);
         return Ok(deviceData);
@@ -24,7 +24,7 @@ public class DHTController : ControllerBase
     public async Task<IActionResult> Get()
     {
         FirebaseResponse response = await _client.GetAsync("Leituras/");
-        var data = response.ResultAs<Dictionary<string, DeviceDto>>();
-        return Ok(data?.Values.ToList() ?? new List<DeviceDto>());
+        var data = response.ResultAs<Dictionary<string, DeviceDTO>>();
+        return Ok(data?.Values.ToList() ?? new List<DeviceDTO>());
     }
 }
