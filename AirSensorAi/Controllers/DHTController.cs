@@ -1,14 +1,14 @@
-using FireSharp.Interfaces;
-using FireSharp.Response;
+using Firebase.Database;
+using Firebase.Database.Query;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
 [Route("api/[controller]")]
 public class DHTController : ControllerBase
 {
-    private readonly IFirebaseClient _client;
+    private readonly FirebaseClient _client;
 
-    public DHTController(IFirebaseClient client)
+    public DHTController(FirebaseClient client)
     {
         _client = client;
     }
@@ -16,15 +16,20 @@ public class DHTController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] DeviceDto deviceData)
     {
-        PushResponse response = await _client.PushAsync("Leituras/", deviceData);
+        await _client
+            .Child("Leituras")
+            .PostAsync(deviceData);
         return Ok(deviceData);
     }
 
     [HttpGet]
     public async Task<IActionResult> Get()
     {
-        FirebaseResponse response = await _client.GetAsync("Leituras/");
-        var data = response.ResultAs<Dictionary<string, DeviceDto>>();
-        return Ok(data?.Values.ToList() ?? new List<DeviceDto>());
+        var data = await _client
+            .Child("Leituras")
+            .OnceAsync<DeviceDto>();
+
+        var list = data.Select(x => x.Object).ToList();
+        return Ok(list);
     }
 }
