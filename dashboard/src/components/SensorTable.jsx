@@ -1,8 +1,28 @@
+import { useState } from 'react'
+import SensorTableFilters from './SensorTableFilters'
+
+const DEFAULT_FILTERS = { id: '', deviceId: '', moistureMin: '', moistureMax: '', dateFrom: '', dateTo: '' }
+
 export default function SensorTable({ readings }) {
-  const sorted = [...readings].reverse() // newest first
+  const [filters, setFilters] = useState(DEFAULT_FILTERS)
+
+  // atribui número de linha em ordem crescente
+  const withRowNum = [...readings].map((r, i) => ({ ...r, _rowNum: i + 1 }))
+
+  const filtered = withRowNum.filter((r) => {
+      if (filters.id !== '' && !String(r._rowNum).includes(filters.id)) return false
+      if (filters.deviceId && r.DeviceId !== filters.deviceId) return false
+      if (filters.moistureMin !== '' && r.SoilMoisturePercent < parseFloat(filters.moistureMin)) return false
+      if (filters.moistureMax !== '' && r.SoilMoisturePercent > parseFloat(filters.moistureMax)) return false
+      if (filters.dateFrom && r.Timestamp * 1000 < new Date(filters.dateFrom).getTime()) return false
+      if (filters.dateTo && r.Timestamp * 1000 > new Date(filters.dateTo).getTime()) return false
+      return true
+    })
 
   return (
     <div className="table-wrapper">
+      <SensorTableFilters readings={readings} filters={filters} onChange={setFilters} />
+      <p className="table-count">{filtered.length} de {readings.length} leituras</p>
       <table className="sensor-table">
         <thead>
           <tr>
@@ -14,9 +34,9 @@ export default function SensorTable({ readings }) {
           </tr>
         </thead>
         <tbody>
-          {sorted.map((r, i) => (
+          {filtered.map((r, i) => (
             <tr key={r._id ?? i}>
-              <td>{readings.length - i}</td>
+              <td>{r._rowNum}</td>
               <td><code>{r.DeviceId}</code></td>
               <td>{new Date(r.Timestamp * 1000).toLocaleString('pt-BR')}</td>
               <td>

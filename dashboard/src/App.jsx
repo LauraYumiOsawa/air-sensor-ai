@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { RefreshCw, Leaf, BarChart2 } from 'lucide-react'
+import { RefreshCw, Leaf, BarChart2, X } from 'lucide-react'
 import { fetchReadings } from './api'
 import SensorChart from './components/SensorChart'
 import SensorTable from './components/SensorTable'
@@ -22,10 +22,12 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [lastUpdated, setLastUpdated] = useState(null)
+  // btnState: 'idle' | 'spinning' | 'done'
+  const [btnState, setBtnState] = useState('idle')
 
   const loadData = useCallback(async () => {
     if (USE_MOCK) {
-    //   setReadings(MOCK_READINGS)
+      setReadings(MOCK_READINGS)
       setError(null)
       setLastUpdated(new Date())
       setLoading(false)
@@ -56,7 +58,7 @@ export default function App() {
     <div className="app">
       <header className="header">
         <div className="header-left">
-          <span className="header-icon"><Leaf size={24}/></span>
+          <span className="header-icon"><Leaf color="SeaGreen" fill="LimeGreen" size={48}/></span>
           <div>
             <h1>AirSensor AI</h1>
             <p className="header-subtitle">Monitoramento de Umidade do Solo</p>
@@ -64,11 +66,30 @@ export default function App() {
         </div>
         <div className="header-right">
           <StatusBadge error={error} loading={loading} lastUpdated={lastUpdated} />
-          <button className="btn-refresh" onClick={loadData} disabled={loading}>
-            <RefreshCw
-              size={15}
-              style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6, animation: loading ? 'spin 1s linear infinite' : 'none' }}
-            />
+          <button
+            className="btn-refresh"
+            onClick={() => {
+              if (!loading) {
+                setBtnState('spinning')
+                setTimeout(() => {
+                  setBtnState('done')
+                  setTimeout(() => setBtnState('idle'), 400)
+                }, 600)
+              }
+              loadData()
+            }}
+            disabled={loading}
+          >
+            {loading || btnState === 'spinning' ? (
+              <RefreshCw
+                size={15}
+                style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6, animation: loading ? 'spin 1s linear infinite' : 'spin 0.6s linear 1' }}
+              />
+            ) : btnState === 'done' ? (
+              <X size={15} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} />
+            ) : (
+              <RefreshCw size={15} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 6 }} />
+            )}
             Atualizar
           </button>
         </div>
@@ -121,7 +142,7 @@ export default function App() {
         !loading && !error && (
           <div className="empty-state">
             <span><BarChart2 size={48}/></span>
-            <p>Nenhuma leitura disponível ainda.</p>
+            <p>Nenhuma leitura disponível.</p>
           </div>
         )
       )}
