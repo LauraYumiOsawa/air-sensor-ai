@@ -8,12 +8,12 @@ import './App.css'
 
 const REFRESH_INTERVAL = 10000
 
-const USE_MOCK = true // altere para false quando a API estiver disponível
+const USE_MOCK = false // altere para false quando a API estiver disponível
 
 const MOCK_READINGS = Array.from({ length: 20 }, (_, i) => ({
   Timestamp: Math.floor(Date.now() / 1000) - (19 - i) * 60,
-  SoilMoisturePercent: 40 + Math.sin(i * 0.5) * 25 + Math.random() * 5,
-  SoilMoistureRaw: 1800 + Math.sin(i * 0.5) * 600 + Math.random() * 100,
+  Temperature: 20 + Math.sin(i * 0.5) * 8 + Math.random() * 2,
+  Humidity: 50 + Math.sin(i * 0.5) * 25 + Math.random() * 5,
   DeviceId: 'ESP32-MOCK-01',
 }))
 
@@ -98,7 +98,7 @@ export default function App() {
       {error && (
         <div className="alert-error">
           ⚠️ {error} — verifique se o AirSensorAI está rodando em{' '}
-          <code>http://localhost:5259</code>
+          <code>https://air-sensor-ai--leticia-hub.replit.app</code>
         </div>
       )}
 
@@ -109,12 +109,12 @@ export default function App() {
             <span className="kpi-value">{new Date(latest.Timestamp * 1000).toLocaleString('pt-BR')}</span>
           </div>
           <div className="kpi-card accent-green">
-            <span className="kpi-label">Umidade (%)</span>
-            <span className="kpi-value">{latest.SoilMoisturePercent?.toFixed(1)}%</span>
+            <span className="kpi-label">Temperatura</span>
+            <span className="kpi-value">{latest.Temperature?.toFixed(1)} °C</span>
           </div>
           <div className="kpi-card accent-blue">
-            <span className="kpi-label">Valor Bruto</span>
-            <span className="kpi-value">{latest.SoilMoistureRaw?.toFixed(0)}</span>
+            <span className="kpi-label">Umidade (%)</span>
+            <span className="kpi-value">{latest.Humidity?.toFixed(1)}%</span>
           </div>
           <div className="kpi-card accent-purple">
             <span className="kpi-label">Dispositivo</span>

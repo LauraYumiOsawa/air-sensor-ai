@@ -7,7 +7,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://localhost:5259',
+        target: 'https://air-sensor-ai--leticia-hub.replit.app/',
         changeOrigin: true,
       },
     },

@@ -12,8 +12,8 @@ export default function SensorTable({ readings }) {
   const filtered = withRowNum.filter((r) => {
       if (filters.id !== '' && !String(r._rowNum).includes(filters.id)) return false
       if (filters.deviceId && r.DeviceId !== filters.deviceId) return false
-      if (filters.moistureMin !== '' && r.SoilMoisturePercent < parseFloat(filters.moistureMin)) return false
-      if (filters.moistureMax !== '' && r.SoilMoisturePercent > parseFloat(filters.moistureMax)) return false
+      if (filters.moistureMin !== '' && r.Humidity < parseFloat(filters.moistureMin)) return false
+      if (filters.moistureMax !== '' && r.Humidity > parseFloat(filters.moistureMax)) return false
       if (filters.dateFrom && r.Timestamp * 1000 < new Date(filters.dateFrom).getTime()) return false
       if (filters.dateTo && r.Timestamp * 1000 > new Date(filters.dateTo).getTime()) return false
       return true
@@ -29,8 +29,8 @@ export default function SensorTable({ readings }) {
             <th>#</th>
             <th>Dispositivo</th>
             <th>Data/Hora</th>
+            <th>Temperatura (°C)</th>
             <th>Umidade (%)</th>
-            <th>Valor Bruto</th>
           </tr>
         </thead>
         <tbody>
@@ -39,16 +39,16 @@ export default function SensorTable({ readings }) {
               <td>{r._rowNum}</td>
               <td><code>{r.DeviceId}</code></td>
               <td>{new Date(r.Timestamp * 1000).toLocaleString('pt-BR')}</td>
+              <td>{r.Temperature?.toFixed(1)} °C</td>
               <td>
                 <div className="moisture-bar-container">
                   <div
                     className="moisture-bar"
-                    style={{ width: `${Math.min(r.SoilMoisturePercent, 100)}%` }}
+                    style={{ width: `${Math.min(r.Humidity, 100)}%` }}
                   />
-                  <span>{r.SoilMoisturePercent?.toFixed(1)}%</span>
+                  <span>{r.Humidity?.toFixed(1)}%</span>
                 </div>
               </td>
-              <td>{r.SoilMoistureRaw?.toFixed(0)}</td>
             </tr>
           ))}
         </tbody>
