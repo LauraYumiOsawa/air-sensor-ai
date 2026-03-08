@@ -31,8 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAll");
 app.MapGet("/teste", () => "ok");
 app.UseRouting();
-app.UseCors("AllowAll");
 app.MapControllers();
 app.Run();
