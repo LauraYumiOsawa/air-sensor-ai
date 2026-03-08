@@ -32,7 +32,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapGet("/teste", () => "ok");
-app.UseCors("AllowAll");
 app.UseRouting();
+app.UseCors("AllowAll");
 app.MapControllers();
 app.Run();
